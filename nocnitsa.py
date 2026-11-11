@@ -1,6 +1,8 @@
 from PIL import Image
 import argparse
-
+#python3 nocnitsa.py hide file file
+#python3 nocnitsa.py extract file
+#maybe i should add code comments...
 def getbits(img, start, to):#
     image = Image.open(img)
     dectuplelist = image.get_flattened_data()
