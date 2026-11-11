@@ -9,7 +9,7 @@ def getbits(img, start, to):#
         for dec in dectuple:
             bitlist.append(format(dec, '08b')[start:to])#oh man...
     return bitlist
-def putemtogehter(carrierbits, msgbits):
+def putemtogether(carrierbits, msgbits):
     for i in range(len(carrierbits)):
         carrierbits[i] = carrierbits[i] +  msgbits[i]
     return carrierbits
@@ -17,7 +17,7 @@ def hide(carrier,msg):
     carrierbits = getbits(carrier,0,6)
     msgbits = getbits(msg,0,2)
 
-    carrierbits = putemtogehter(carrierbits, msgbits)
+    carrierbits = putemtogether(carrierbits, msgbits)
     width = 640
     height = 434
     size = (width,height)
