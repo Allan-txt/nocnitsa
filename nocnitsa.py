@@ -14,7 +14,7 @@ def putemtogehter(carrierbits, msgbits):
     return carrierbits
 def hide():
     carrierbits = getbits(input("carrier: "),0,6)
-    msgbits = getbits(input("msg: "),6,8)
+    msgbits = getbits(input("msg: "),0,2)
 
     carrierbits = putemtogehter(carrierbits, msgbits)
     width = 640
@@ -27,4 +27,18 @@ def hide():
     carrier.save("carrier.png")
 
 
+def extract():
+    img = input("image to extract:")
+    bits = getbits(img,6,8)
+    i = 0
+    for i in range(len(bits)):
+        bits[i] = bits[i] + "000000"
+    width = 640
+    height = 434
+    size = (width, height)
+    data = [int(byte, 2) for byte in bits]
+    data = bytes(data)
 
+    carrier = Image.frombytes("RGB", size, data, decoder_name='raw')
+    carrier.save("recovered.png")
+extract()
