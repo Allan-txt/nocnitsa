@@ -57,4 +57,37 @@ some steganography using the least significant bits
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ![wow](/recovered.png)
