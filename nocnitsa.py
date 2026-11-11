@@ -1,4 +1,5 @@
 from PIL import Image
+import argparse
 
 def getbits(img, start, to):#
     image = Image.open(img)
@@ -12,9 +13,9 @@ def putemtogehter(carrierbits, msgbits):
     for i in range(len(carrierbits)):
         carrierbits[i] = carrierbits[i] +  msgbits[i]
     return carrierbits
-def hide():
-    carrierbits = getbits(input("carrier: "),0,6)
-    msgbits = getbits(input("msg: "),0,2)
+def hide(carrier,msg):
+    carrierbits = getbits(carrier,0,6)
+    msgbits = getbits(msg,0,2)
 
     carrierbits = putemtogehter(carrierbits, msgbits)
     width = 640
@@ -27,8 +28,7 @@ def hide():
     carrier.save("carrier.png")
 
 
-def extract():
-    img = input("image to extract:")
+def extract(img):
     bits = getbits(img,6,8)
     i = 0
     for i in range(len(bits)):
@@ -41,4 +41,22 @@ def extract():
 
     carrier = Image.frombytes("RGB", size, data, decoder_name='raw')
     carrier.save("recovered.png")
-extract()
+
+def main():
+    parser = argparse.ArgumentParser()
+    commands = parser.add_subparsers(dest="command")
+
+    hide_parser = commands.add_parser('hide')
+    hide_parser.add_argument('carrier')
+    hide_parser.add_argument('msg')
+
+    extract_parser = commands.add_parser('extract')
+    extract_parser.add_argument('carrier')
+
+    args = parser.parse_args()
+    if args.command == "hide":
+        hide(args.carrier, args.msg)
+    else:
+        extract(args.carrier)
+
+main()
