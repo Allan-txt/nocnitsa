@@ -1,5 +1,4 @@
 from PIL import Image
-from io import BytesIO
 
 def getbits(img, start, to):#
     image = Image.open(img)
@@ -8,26 +7,24 @@ def getbits(img, start, to):#
     for dectuple in dectuplelist:
         for dec in dectuple:
             bitlist.append(format(dec, '08b')[start:to])#oh man...
-    #print(bitlist)
     return bitlist
 def putemtogehter(carrierbits, msgbits):
     for i in range(len(carrierbits)):
-        print("carrierbit: ", carrierbits[i])
-        print("msgbit: ", msgbits[i])
         carrierbits[i] = carrierbits[i] +  msgbits[i]
-        print("new: ", carrierbits[i])
     return carrierbits
-def main():
-    #carrier = Image.open("tree.png")
-    #msg = Image.open("cat.png")
-    carrierbits = getbits("tree.png",0,6)
-    msgbits = getbits("cat.png",6,8)
+def hide():
+    carrierbits = getbits(input("carrier: "),0,6)
+    msgbits = getbits(input("msg: "),6,8)
 
     carrierbits = putemtogehter(carrierbits, msgbits)
-    print(carrierbits)
     width = 640
     height = 434
-    Image.frombytes(mode, size, data, decoder_name='raw', *args)
+    size = (width,height)
+    data = [int(byte,2) for byte in carrierbits]
+    data = bytes(data)
+
+    carrier = Image.frombytes("RGB", size, data, decoder_name='raw')
+    carrier.save("carrier.png")
 
 
-main()
+
