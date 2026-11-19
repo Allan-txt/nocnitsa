@@ -1,5 +1,8 @@
 from PIL import Image
-
+import argparse
+#python3 nocnitsa.py hide file file
+#python3 nocnitsa.py extract file
+#maybe i should add code comments...
 def getbits(img, start, to):#
     image = Image.open(img)
     dectuplelist = image.get_flattened_data()
@@ -41,3 +44,21 @@ def extract(img):
     carrier = Image.frombytes("RGB", size, data, decoder_name='raw')
     carrier.save("recovered.png")
 
+def main():
+    parser = argparse.ArgumentParser()
+    commands = parser.add_subparsers(dest="command")
+
+    hide_parser = commands.add_parser('hide')
+    hide_parser.add_argument('carrier')
+    hide_parser.add_argument('msg')
+
+    extract_parser = commands.add_parser('extract')
+    extract_parser.add_argument('carrier')
+
+    args = parser.parse_args()
+    if args.command == "hide":
+        hide(args.carrier, args.msg)
+    else:
+        extract(args.carrier)
+
+main()
